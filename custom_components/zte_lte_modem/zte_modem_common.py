@@ -52,7 +52,7 @@ class ZteModemConnection:
 
         return requests.get(self.url + ZTE_API_BASE + GET_CMD, params=params, headers=headers)
 		
-    def sendLoginCommand(self, crVersion, waInnerVersion, ld, rd):
+    def sendLoginCommand(self):
         headers = { "Origin": self.url, "Referer": self.url + "/index.html", "Host": self.host, "Accept": "application/json, text/javascript, */*; q=0.01" }
         passwordHash = calculatePasswordHash(self.password)
 
