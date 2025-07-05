@@ -11,8 +11,6 @@ from homeassistant.helpers.discovery import load_platform
 from homeassistant.const import (
     CONF_PROTOCOL,
     CONF_HOST,
-    CONF_PORT,
-    CONF_USERNAME,
     CONF_PASSWORD,
 )
 
@@ -29,8 +27,6 @@ CONFIG_SCHEMA =  vol.Schema(
         DOMAIN: {
             vol.Required(CONF_PROTOCOL): cv.string,
             vol.Required(CONF_HOST): cv.string,
-            vol.Required(CONF_PORT): cv.string,
-            vol.Required(CONF_USERNAME): cv.string,
             vol.Required(CONF_PASSWORD): cv.string,
         }
     },
@@ -44,21 +40,16 @@ def setup(hass: HomeAssistant, config: ConfigType) -> bool:
     
     protocol = config[DOMAIN].get(CONF_PROTOCOL)
     host =  config[DOMAIN].get(CONF_HOST)
-    port = config[DOMAIN].get(CONF_PORT)
-    username = config[DOMAIN].get(CONF_USERNAME)
     password = config[DOMAIN].get(CONF_PASSWORD)
 
-    connection = ZteModemConnection(protocol, host, port, username, password)
+    connection = ZteModemConnection(protocol, host, password)
 
     _LOGGER.debug("setup: created modem connection object.")
 
     hass.data[DOMAIN] = {"connection": connection}
 
-    def handle_zte_send_sms(call):
-        handle_request(call, connection)
+    def handle_request(call, connection)
 
     load_platform(hass, 'sensor', DOMAIN, {}, hass_config=config)
-    hass.services.register(DOMAIN, "zte_send_sms", handle_zte_send_sms)
-
 
     return True
