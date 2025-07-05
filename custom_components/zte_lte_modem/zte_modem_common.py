@@ -39,7 +39,19 @@ class ZteModemConnection:
         params = {"isTest": "false", "cmd": "Language%2Ccr_version%2Cwa_inner_version", "multi_data": "1" }
 
         return requests.get(self.url + ZTE_API_BASE + GET_CMD, params=params, headers=headers)
+        
+    def getLd(self):
+        headers = { "Referer": self.url + "/index.html", "Host": self.host, "Accept": "application/json, text/javascript, */*; q=0.01" }
+        params = { "isTest": "false", "cmd": "LD" }
 
+        return requests.get(self.url + ZTE_API_BASE + GET_CMD, params=params, headers=headers)
+
+    def getRd(self):
+        headers = { "Referer": self.url + "/index.html", "Host": self.host, "Accept": "application/json, text/javascript, */*; q=0.01"}
+        params = { "isTest": "false", "cmd": "RD" }
+
+        return requests.get(self.url + ZTE_API_BASE + GET_CMD, params=params, headers=headers)
+		
     def sendLoginCommand(self, crVersion, waInnerVersion, ld, rd):
         headers = { "Origin": self.url, "Referer": self.url + "/index.html", "Host": self.host, "Accept": "application/json, text/javascript, */*; q=0.01" }
         passwordHash = calculatePasswordHash(self.password)
